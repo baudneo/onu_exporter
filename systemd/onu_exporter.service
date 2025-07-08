@@ -1,0 +1,12 @@
+[Unit]
+Description="8311 ONU Exporter"
+
+[Service]
+LogNamespace=onu_exporter
+Type=oneshot
+Environment="PYTHONUNBUFFERED=1"
+WorkingDirectory=/path/to/onu_exporter/
+# without virtual environment
+ExecStart=python3 onu_exporter.py
+# with virtual environment
+# ExecStart=/path/to/onu_exporter/venv/bin/python3 onu_exporter.py
