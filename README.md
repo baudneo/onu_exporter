@@ -68,7 +68,7 @@ You can change the device name, model, and other characteristics in the [`.env`]
 #-- These can be anything you want, see the screenshot above to see where the data will be displayed in Home Assistant --
 DEVICE_MANUFACTURER="FiberMall"
 DEVICE_NAME="XGSPON ONU Stick"
-#-- DEVICE_MODEL will default to the `module_info` value from the example output data below (and the 8311 web GUI status page)
+#-- DEVICE_MODEL will default to the `module_info` value from the 8311 web GUI status page if not set here
 #DEVICE_MODEL="XGSPON-ONU-STICK"
 #-- For now, these must be set manually --
 DEVICE_SW_VERSION="8311 [basic] - v2.8.0 (f4e4db3)"
