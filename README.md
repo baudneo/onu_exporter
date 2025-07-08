@@ -5,6 +5,8 @@ This is a Python script that will:
 - Publish HASS MQTT device config and entity state data to create a device with entities that can be used in Home Assistant
 
 # Pre-requisites
+- 8311 ONU device, configured and working
+- ONU device IP is reachable (see [this Source NAT opnsense example](https://pon.wiki/guides/install-the-8311-community-firmware-on-the-was-110/#opnsense)) 
 - SSH password-less login to the ONU from the script host (copy script host SSH key over to the ONU)
 - Home Assistant (HASS) installed and running
 - MQTT broker (EMQX, Mosquitto, etc.)
