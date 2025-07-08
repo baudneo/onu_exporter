@@ -209,7 +209,7 @@ def main():
     except Exception as e:
         logger.exception("Script execution failed")
     else:
-        logger.info(f"Published MQTT device config and entity states, go to the HASS UI: 'Settings > Devices and Integrations > Devices' and search for '{DEVICE_NAME}'")
+        logger.info(f"Published MQTT device config and entity states, go to the HASS UI: 'Settings > Devices and services > Devices' and search for '{DEVICE_NAME}'")
 
 if __name__ == "__main__":
     requests.packages.urllib3.disable_warnings()
