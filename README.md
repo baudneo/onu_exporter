@@ -13,7 +13,7 @@ This is a Python script that will:
 
 # Installation
 - Clone this repository and `cd` into it
-- Copy the example.env file and rename it to `.env`
+- Copy the `example.env` file and rename it to `.env`
 - Edit the newly created `.env` to match your MQTT broker settings and edit the ONU device characteristics if it is different from the example.
 - _Optional:_ Set up a virtual environment for Python: `python3 -m venv venv`
 - Install required packages (see requirements.txt): `pip install -r requirements.txt`
