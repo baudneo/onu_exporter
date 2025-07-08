@@ -16,7 +16,7 @@ This is a Python script that will:
 - Copy the `example.env` file and rename it to `.env`
 - Edit the newly created `.env` to match your MQTT broker settings and edit the ONU device characteristics if it is different from the example.
 - _Optional:_ Set up a virtual environment for Python: `python3 -m venv venv`
-- Install required packages (see requirements.txt): `pip install -r requirements.txt`
+- Install required packages (see [`requirements.txt`](./requirements.txt)): `pip install -r requirements.txt`
 - Set up systemd service and timer or a cron job to run the script periodically (See the [SystemD](#systemd) and [Cron](#cron) sections below)
 
 # Usage
