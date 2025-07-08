@@ -5,6 +5,7 @@ This is a Python script that will:
 - Publish HASS MQTT device config and entity state data to create a device with entities that can be used in Home Assistant
 
 # Pre-requisites
+- SSH password-less login to the ONU from the script host (copy script host SSH key over to the ONU)
 - Home Assistant (HASS) installed and running
 - MQTT broker (EMQX, Mosquitto, etc.)
 - [MQTT integration](https://www.home-assistant.io/integrations/mqtt/) configured in HASS and [MQTT auto-discovery](https://www.home-assistant.io/integrations/mqtt/#mqtt-discovery) enabled
