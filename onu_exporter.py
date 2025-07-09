@@ -26,32 +26,38 @@ logger.addHandler(handler)
 
 dotenv.load_dotenv()
 
-DEBUG = os.getenv("ONU_DEBUG", "false").lower() in ("true", "1", "yes", "y", 1, "on")
-ONU_HOST = os.getenv("ONU_HOST", "192.168.11.1")
-ONU_PORT = int(os.getenv("ONU_PORT", 443))
-ONU_USER = os.getenv("ONU_USER")
-ONU_PASS = os.getenv("ONU_PASS")
+DEBUG: str = os.getenv("ONU_DEBUG", "false").lower() in ("true", "1", "yes", "y", 1, "on")
+ONU_HOST: str = os.getenv("ONU_HOST", "192.168.11.1")
+ONU_PORT: int = int(os.getenv("ONU_PORT", 443))
+ONU_USER: str = os.getenv("ONU_USER")
+ONU_PASS: str = os.getenv("ONU_PASS")
 
-MQTT_HOST = os.getenv("MQTT_HOST")
-MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
-MQTT_USER = os.getenv("MQTT_USER")
-MQTT_PASS = os.getenv("MQTT_PASS")
-DISCOVERY_PREFIX = os.getenv("MQTT_DISCOVERY_PREFIX", "homeassistant")
+ONU_TEMP_SCALE: str = os.getenv("ONU_TEMP_SCALE", "C").upper()
+ONU_MAC: str = ""
+ONU_MAX_TEMP: int = int(os.getenv("ONU_MAX_TEMP", 85))
+ONU_MIN_TEMP: int = int(os.getenv("ONU_MIN_TEMP", 40))
+ONU_RX_MAX: float = float(os.getenv("ONU_RX_MAX", -28.5))
+ONU_TX_MIN: float = float(os.getenv("ONU_TX_MIN", 4))
+ONU_TX_MAX: float = float(os.getenv("ONU_TX_MAX", 9))
 
-DEVICE_ID = os.getenv("DEVICE_ID", "onu_stick")
-DEVICE_NAME = os.getenv("DEVICE_NAME", "XGSPON ONU Stick")
-DEVICE_MODEL = os.getenv("DEVICE_MODEL")
-DEVICE_MANUFACTURER = os.getenv("DEVICE_MANUFACTURER", "Unknown")
-DEVICE_SW_VERSION = os.getenv("DEVICE_SW_VERSION", "8311 [basic] - v2.8.0 (f4e4db3)")
-DEVICE_HW_VERSION = os.getenv("DEVICE_HW_VERSION", "1.0 [bfw]")
+MQTT_HOST: str = os.getenv("MQTT_HOST")
+MQTT_PORT: int = int(os.getenv("MQTT_PORT", 1883))
+MQTT_USER: str = os.getenv("MQTT_USER")
+MQTT_PASS: str = os.getenv("MQTT_PASS")
+DISCOVERY_PREFIX: str = os.getenv("MQTT_DISCOVERY_PREFIX", "homeassistant")
 
-ONU_MAC = ""
+DEVICE_ID: str = os.getenv("DEVICE_ID", "onu_stick")
+DEVICE_NAME: str = os.getenv("DEVICE_NAME", "XGSPON ONU Stick")
+DEVICE_MODEL: str = os.getenv("DEVICE_MODEL")
+DEVICE_MANUFACTURER: str = os.getenv("DEVICE_MANUFACTURER", "Unknown")
+DEVICE_SW_VERSION: str = os.getenv("DEVICE_SW_VERSION", "8311 [basic] - v2.8.0 (f4e4db3)")
+DEVICE_HW_VERSION: str = os.getenv("DEVICE_HW_VERSION", "1.0 [bfw]")
 ENTITY_PREFIX = DEVICE_ID
 
 ENTITY_DEFINITIONS = {
-    "temp_cpu0": {"name": "CPU 0", "unit": "°C", "device_class": "temperature", "platform": "sensor", "state_class": "measurement"},
-    "temp_cpu1": {"name": "CPU 1", "unit": "°C", "device_class": "temperature", "platform": "sensor", "state_class": "measurement"},
-    "temp_optic": {"name": "Optical", "unit": "°C", "device_class": "temperature", "platform": "sensor", "state_class": "measurement"},
+    "temp_cpu0": {"name": "CPU 0", "unit": f"°{ONU_TEMP_SCALE}", "device_class": "temperature", "platform": "sensor", "state_class": "measurement"},
+    "temp_cpu1": {"name": "CPU 1", "unit": f"°{ONU_TEMP_SCALE}", "device_class": "temperature", "platform": "sensor", "state_class": "measurement"},
+    "temp_optic": {"name": "Optical", "unit": f"°{ONU_TEMP_SCALE}", "device_class": "temperature", "platform": "sensor", "state_class": "measurement"},
     "rx_power": {"name": "RX Power", "unit": "dBm", "device_class": "signal_strength", "platform": "sensor", "state_class": "measurement"},
     "tx_power": {"name": "TX Power", "unit": "dBm", "device_class": "signal_strength", "platform": "sensor", "state_class": "measurement"},
     "tx_bias": {"name": "TX Bias", "unit": "mA", "device_class": "current", "platform": "sensor", "state_class": "measurement"},
@@ -59,10 +65,10 @@ ENTITY_DEFINITIONS = {
     "eth_speed": {"name": "Ethernet Speed", "unit": "Mbit/s", "device_class": "data_rate", "platform": "sensor", "state_class": "measurement", "icon": "mdi:ethernet"},
 
     "active_bank": {"name": "Active Firmware Bank", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:memory"},
-    "status": {"name": "PON PLOAM Status", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:signal"},
+    "ploam_status": {"name": "PLOAM Status", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:signal"},
     "pon_mode": {"name": "PON Mode", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:network"},
-    "mac": {"name": "Management MAC Address", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:ethernet-cable"},
-    "ip": {"name": "Management IP Address", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:ip-network"},
+    "mac_address": {"name": "Management MAC Address", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:ethernet-cable"},
+    "ip_address": {"name": "Management IP Address", "unit": None, "device_class": None, "platform": "text", "state_class": None, "icon": "mdi:ip-network"},
 }
 
 session = requests.Session()
@@ -96,11 +102,20 @@ def parse_metrics(data):
 
     values = {}
     try:
-        t_match = re.findall(r"([\d.]+)\s*°C\s*\([\d.]+\s*°F\)", data["temperature"])
-        if len(t_match) >= 3:
-            values["temp_cpu0"] = float(t_match[0])
-            values["temp_cpu1"] = float(t_match[1])
-            values["temp_optic"] = float(t_match[2])
+        logger.debug(f"Temperature scale set to: {ONU_TEMP_SCALE}")
+        if ONU_TEMP_SCALE == "C":
+            t_match = re.findall(r"([\d.]+)\s*°C\s*\([\d.]+\s*°F\)", data["temperature"])
+            if len(t_match) >= 3:
+                values["temp_cpu0"] = float(t_match[0])
+                values["temp_cpu1"] = float(t_match[1])
+                values["temp_optic"] = float(t_match[2])
+        elif ONU_TEMP_SCALE == "F":
+            t_match = re.findall(r"[\d.]+\s*°C\s*\(([\d.]+)\s*°F\)", data["temperature"])
+            if len(t_match) >= 3:
+                values["temp_cpu0"] = float(t_match[0])
+                values["temp_cpu1"] = float(t_match[1])
+                values["temp_optic"] = float(t_match[2])
+
 
         p_match = re.match(r"(-?\d+\.\d+)\s*dBm\s*/\s*(-?\d+\.\d+)\s*dBm\s*/\s*(\d+\.\d+)\s*mA", data["power"])
         if p_match:
@@ -115,10 +130,10 @@ def parse_metrics(data):
         if eth_speed_match:
             values["eth_speed"] = int(eth_speed_match.group(1))
         values["active_bank"] = data["active_bank"].strip()
-        values["status"] = data["status"].strip()
+        values["ploam_status"] = data["status"].strip()
         values["pon_mode"] = data["pon_mode"].strip()
-        values["mac"] = ONU_MAC
-        values["ip"] = ONU_HOST
+        values["mac_address"] = ONU_MAC
+        values["ip_address"] = ONU_HOST
         if "module_info" in data and data["module_info"]:
             mod_inf = data["module_info"].strip()
             if not DEVICE_MODEL:
@@ -161,11 +176,13 @@ def publish_sensor(key, value):
     payload = {
         "name": meta["name"],
         "unique_id": object_id,
+        "object_id": object_id,
         "state_topic": state_topic,
         "unit_of_measurement": meta["unit"],
         "device_class": meta["device_class"],
         "state_class": meta["state_class"],
         "platform": meta["platform"],
+        "force_update": True,  # Force update to ensure state is always published
         "device": {
             "identifiers": [DEVICE_ID],
             "name": DEVICE_NAME,
