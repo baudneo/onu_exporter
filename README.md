@@ -22,6 +22,9 @@ This is a Python script that will:
 - Set up systemd service and timer or a cron job to run the script periodically (See the [SystemD](#systemd) and [Cron](#cron) sections below)
 
 # Usage
+>[!NOTE]
+> You can change the temperature scale between Celsius and Fahrenheit by setting the `ONU_TEMP_SCALE` variable in the `.env` file to either `C` or `F`. The default is `C`.
+
 To test the script, run it manually:
 
 ```bash
@@ -92,3 +95,18 @@ Here is an example of the data returned by the API for the Intel Fibermall XGSPO
 'voltage': '3.26 V'
 }
 ```
+
+# Example lovelace card
+[There is a card example](./examples/ring-tile.yaml) that uses a sections view with custom cards:
+- card-mod
+- layout-card
+- [ring-tile](https://github.com/neponn/ring-tile-card)
+- vertical-stack-in-card
+- mushroom-template-card
+- mini-graph-card
+
+![Lovelace Card Example](./docs/assets/ring-tile_example.png)
+
+You may need to change sensor entity_ids in the card to match your MQTT device entity IDs and the color gradients arent dialed in yet, so you may need to adjust the colors to your liking.
+
+I am adding sensors that will represent min/max values for the temperature, signal, and voltage sensors, so you can use (and configure via .env) those instead of hardcoding.
