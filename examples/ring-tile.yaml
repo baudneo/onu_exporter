@@ -1,339 +1,459 @@
-- type: heading
-  heading: 8311 ONU Stick
-  heading_style: title
-  icon: mdi:lan-connect
-  badges:
-    - type: entity
-      entity: sensor.onu_stick_pon_mode
-    - type: entity
-      entity: sensor.xgspon_onu_stick_ploam_status
-    - type: entity
-      entity: sensor.onu_stick_active_bank
-- type: heading
-  icon: mdi:lan
-  heading_style: subtitle
-  badges:
-    - type: entity
-      entity: sensor.xgspon_onu_stick_management_ip_address
-    - type: entity
-      entity: sensor.xgspon_onu_stick_management_mac_address
-- type: custom:vertical-stack-in-card
-  cards:
-    - type: custom:mushroom-template-card
-      primary: Temperature
-      entity: sensor.onu_stick_active_bank
-      secondary: >-
-        {{
-        relative_time(states.sensor.onu_stick_temp_cpu_0.last_reported)
-        }} ago
-      fill_container: false
-      multiline_secondary: false
-    - type: horizontal-stack
-      cards:
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_temp_cpu_0
-              name: CPU-0
-              max: 85
-              min: 40
-              colorize_icon: true
-              color:
-                '40': '#45b6fe'
-                '50': '#08f26e'
-                '60': '#d7f207'
-                '80': '#f94449'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_temp_cpu_0
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 0
-                      color: '#45b6fe'
-                    - value: 50
-                      color: '#08f26e'
-                    - value: 60
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_temp_cpu_1
-              name: CPU-1
-              max: 85
-              min: 40
-              colorize_icon: true
-              color:
-                '40': '#45b6fe'
-                '50': '#08f26e'
-                '60': '#d7f207'
-                '80': '#f94449'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_temp_cpu_1
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 0
-                      color: '#45b6fe'
-                    - value: 50
-                      color: '#08f26e'
-                    - value: 60
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {w
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_temp_optic
-              name: Optical
-              max: 85
-              min: 20
-              colorize_icon: true
-              color:
-                '20': '#45b6fe'
-                '40': '#08f26e'
-                '60': '#d7f207'
-                '80': '#f94449'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_temp_optic
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 0
-                      color: '#45b6fe'
-                    - value: 50
-                      color: '#08f26e'
-                    - value: 60
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
-- type: custom:vertical-stack-in-card
-  cards:
-    - type: horizontal-stack
-      cards:
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_voltage
-              name: Module Voltage
-              indicator: dot
-              max: 3.47
-              min: 3.13
-              colorize_icon: true
-              color:
-                '3.13': '#f94449'
-                '3.18': '#d7f207'
-                '3.2': '#08f26e'
-                '3.39': '#d7f207'
-                '3.44': '#f94449'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_voltage
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 3.13
-                      color: '#f94449'
-                    - value: 3.18
-                      color: '#d7f207'
-                    - value: 3.2
-                      color: '#08f26e'
-                    - value: 3.39
-                      color: '#d7f207'
-                    - value: 3.44
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
-- type: custom:vertical-stack-in-card
-  cards:
-    - type: custom:mushroom-template-card
-      primary: Signal
-      entity: sensor.onu_stick_active_bank
-      secondary: >-
-        {{
-        relative_time(states.sensor.onu_stick_temp_cpu_0.last_reported)
-        }} ago
-      fill_container: false
-      multiline_secondary: false
-    - type: horizontal-stack
-      cards:
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_rx_power
-              name: Rx
-              max: -8
-              min: -28
-              colorize_icon: true
-              color:
-                '-32': '#f94449'
-                '-28': '#d7f207'
-                '-20': '#45b6fe'
-                '-15': '#08f26e'
-                '-10': '#d7f207'
-                '-5': '#f94449'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_rx_power
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 0
-                      color: '#45b6fe'
-                    - value: 50
-                      color: '#08f26e'
-                    - value: 60
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_tx_power
-              name: Tx
-              icon: mdi:radio-tower
-              max: 10
-              min: 3
-              colorize_icon: true
-              top_element: icon
-              color:
-                '3': '#f94449'
-                '4': '#d7f207'
-                '5': '#45b6fe'
-                '6': '#08f26e'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_tx_power
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 0
-                      color: '#45b6fe'
-                    - value: 50
-                      color: '#08f26e'
-                    - value: 60
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {w
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
-        - type: custom:vertical-stack-in-card
-          cards:
-            - type: custom:ring-tile
-              entity: sensor.onu_stick_tx_bias
-              name: Tx Bias
-              max: 85
-              min: 20
-              colorize_icon: true
-              color:
-                '20': '#45b6fe'
-                '40': '#08f26e'
-                '60': '#d7f207'
-                '80': '#f94449'
-            - type: custom:layout-card
-              cards:
-                - type: custom:mini-graph-card
-                  entities:
-                    - type: attribute
-                      entity: sensor.onu_stick_tx_bias
-                  hours_to_show: 24
-                  line_width: 2
-                  color_thresholds:
-                    - value: 0
-                      color: '#45b6fe'
-                    - value: 50
-                      color: '#08f26e'
-                    - value: 60
-                      color: '#f94449'
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    legend: false
-                  card_mod:
-                    style: |
-                      ha-card {
-                        border-radius: 12px;
-                        box-shadow: none;
-                        border: none;
-                      }
+cards:
+  - type: heading
+    heading: 8311 ONU Stick
+    heading_style: title
+    icon: mdi:lan-connect
+    badges:
+      - type: entity
+        entity: sensor.onu_stick_pon_mode
+      - type: entity
+        entity: sensor.onu_stick_ploam_status
+  - type: heading
+    icon: mdi:lan
+    heading_style: subtitle
+    badges:
+      - type: entity
+        entity: sensor.onu_stick_management_ip_address
+      - type: entity
+        entity: sensor.onu_stick_management_mac_address
+      - type: entity
+        entity: sensor.onu_stick_eth_speed
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Temperature
+        entity: sensor.onu_stick_active_bank
+        secondary: >-
+          {{
+          relative_time(states.sensor.onu_stick_temp_cpu_0.last_reported)
+          }} ago
+        fill_container: false
+        multiline_secondary: false
+      - type: horizontal-stack
+        cards:
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_temp_cpu_0
+                name: CPU-0
+                max: 85
+                min: 40
+                colorize_icon: true
+                color:
+                  '0': '#45b6fe'
+                  '40': '#08f26e'
+                  '60': '#d7f207'
+                  '70': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_temp_cpu_0
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 40
+                        color: '#08f26e'
+                      - value: 60
+                        color: '#d7f207'
+                      - value: 70
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_temp_cpu_1
+                name: CPU-1
+                max: 85
+                min: 40
+                colorize_icon: true
+                color:
+                  '0': '#45b6fe'
+                  '40': '#08f26e'
+                  '60': '#d7f207'
+                  '70': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_temp_cpu_1
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 40
+                        color: '#08f26e'
+                      - value: 60
+                        color: '#d7f207'
+                      - value: 70
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {w
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_temp_optic
+                name: Optical
+                max: 85
+                min: 20
+                colorize_icon: true
+                color:
+                  '0': '#45b6fe'
+                  '40': '#08f26e'
+                  '60': '#d7f207'
+                  '70': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_temp_optic
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 40
+                        color: '#08f26e'
+                      - value: 60
+                        color: '#d7f207'
+                      - value: 70
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }  
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Signal
+        entity: sensor.onu_stick_active_bank
+        secondary: >-
+          {{
+          relative_time(states.sensor.onu_stick_temp_cpu_0.last_reported)
+          }} ago
+        fill_container: false
+        multiline_secondary: false
+      - type: horizontal-stack
+        cards:
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_rx_power
+                name: Rx
+                max: -8
+                min: -29
+                colorize_icon: true
+                color:
+                  '-32': '#f94449'
+                  '-28': '#d7f207'
+                  '-20': '#45b6fe'
+                  '-15': '#08f26e'
+                  '-10': '#d7f207'
+                  '-5': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_rx_power
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 50
+                        color: '#08f26e'
+                      - value: 60
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_tx_power
+                name: Tx
+                icon: mdi:radio-tower
+                max: 10
+                min: 3
+                colorize_icon: true
+                top_element: icon
+                color:
+                  '3': '#f94449'
+                  '4': '#d7f207'
+                  '5': '#45b6fe'
+                  '6': '#08f26e'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_tx_power
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 50
+                        color: '#08f26e'
+                      - value: 60
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {w
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_tx_bias
+                name: Tx Bias
+                max: 100
+                min: 0
+                colorize_icon: true
+                color:
+                  '0': '#f94449'
+                  '10': '#d7f207'
+                  '25': '#08f26e'
+                  '65': '#d7f207'
+                  '100': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_tx_bias
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 50
+                        color: '#08f26e'
+                      - value: 60
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }  
+  - type: heading
+    icon: ''
+    heading: System
+    heading_style: subtitle
+    badges:
+      - type: entity
+        entity: sensor.onu_stick_active_bank
+      - type: entity
+        show_state: true
+        show_icon: true
+        entity: sensor.onu_stick_soc_model
+        state_content: state
+      - type: entity
+        show_state: true
+        show_icon: true
+        entity: sensor.onu_stick_soc_arch
+        icon: ''
+      - type: entity
+        show_state: true
+        show_icon: true
+        entity: sensor.onu_stick_uptime
+        name: Uptime
+        state_content: state
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_memory_percent
+                ring_entity: sensor.onu_stick_memory_used
+                name: Memory
+                icon: mdi:memory
+                min: 0
+                max: sensor.onu_stick_memory_total
+                colorize_icon: true
+                color:
+                  '0': '#45b6fe'
+                  '600': '#08f26e'
+                  '800': '#d7f207'
+                  '975': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - entity: sensor.onu_stick_memory_percent
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 60
+                        color: '#08f26e'
+                      - value: 80
+                        color: '#d7f207'
+                      - value: 100
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_cpu_load
+                icon: mdi:cpu-32-bit
+                name: CPU
+                min: 0
+                max: 1
+                colorize_icon: true
+                color:
+                  '0': '#45b6fe'
+                  '0.45': '#08f26e'
+                  '0.7': '#d7f207'
+                  '1.0': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - entity: sensor.onu_stick_cpu_load
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 0
+                        color: '#45b6fe'
+                      - value: 0.45
+                        color: '#08f26e'
+                      - value: 0.7
+                        color: '#d7f207'
+                      - value: 1
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {w
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:ring-tile
+                entity: sensor.onu_stick_voltage
+                name: Module Voltage
+                indicator: dot
+                max: 3.47
+                min: 3.13
+                colorize_icon: true
+                color:
+                  '3.13': '#f94449'
+                  '3.18': '#d7f207'
+                  '3.2': '#08f26e'
+                  '3.39': '#d7f207'
+                  '3.44': '#f94449'
+              - type: custom:layout-card
+                cards:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - type: attribute
+                        entity: sensor.onu_stick_voltage
+                    hours_to_show: 24
+                    line_width: 2
+                    color_thresholds:
+                      - value: 3.13
+                        color: '#f94449'
+                      - value: 3.18
+                        color: '#d7f207'
+                      - value: 3.2
+                        color: '#08f26e'
+                      - value: 3.39
+                        color: '#d7f207'
+                      - value: 3.44
+                        color: '#f94449'
+                    show:
+                      name: false
+                      icon: false
+                      state: false
+                      legend: false
+                    card_mod:
+                      style: |
+                        ha-card {
+                          border-radius: 12px;
+                          box-shadow: none;
+                          border: none;
+                        }

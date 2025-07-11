@@ -1,12 +1,11 @@
 # 8311 ONU Exporter for Home Assistant (Python)
 This is a Python script that will:
-- Query an API endpoint on the ONU device for temps and other data
-- SSH into the ONU stick to grab the ONU host IP MAC
+- SSH into the ONU stick to grab related information
 - Publish HASS MQTT device config and entity state data to create a device with entities that can be used in Home Assistant
 
 # Pre-requisites
 - 8311 ONU device, configured and working
-- ONU device IP is reachable (see [this Source NAT opnsense example](https://pon.wiki/guides/install-the-8311-community-firmware-on-the-was-110/#opnsense)) 
+- ONU device IP is reachable (see [the pon.wiki network setup docs](https://pon.wiki/guides/install-the-8311-community-firmware-on-the-was-110/#network-setup)) 
 - SSH password-less login to the ONU from the script host (copy script host SSH key over to the ONU)
 - Home Assistant (HASS) installed and running
 - MQTT broker (EMQX, Mosquitto, etc.)
@@ -67,34 +66,18 @@ This script will create a MQTT device that looks something similar to this in Ho
 
 ![MQTT Device Example](./docs/assets/mqtt_device.png)
 
-You can change the device name, model, and other characteristics in the [`.env`](./example.env) file to match your ONU device:
+## Setting manufacturer and device name
+Most data is pulled from the stick via SSH. You'll need to set the manufacturer (Fibermall, ECNI, etc.) and the 
+name of the device to whatever you like in the [`.env`](./example.env) file:
 
 ```dotenv
 #-- These can be anything you want, see the screenshot above to see where the data will be displayed in Home Assistant --
 DEVICE_MANUFACTURER="FiberMall"
 DEVICE_NAME="XGSPON ONU Stick"
-#-- DEVICE_MODEL will default to the `module_info` value from the 8311 web GUI status page if not set here --
-#DEVICE_MODEL="XGSPON-ONU-STICK"
-#-- For now, these must be set manually --
-DEVICE_SW_VERSION="8311 [basic] - v2.8.0 (f4e4db3)"
-DEVICE_HW_VERSION="1.0 [bfw]"
 ```
 
-# API Data Output Example
-Here is an example of the data returned by the API for the Intel Fibermall XGSPON ONU:
-
-```
-{
-'active_bank': 'B', 
-'temperature': '43.16 °C (109.7 °F) / 41.50 °C (106.7 °F) / 28.00 °C (82.4 °F)', 
-'eth_speed': '10000 Mbps', 
-'power': '-24.09 dBm / 6.22 dBm / 33.24 mA', 
-'status': 'O5.1, Associated state', 
-'pon_mode': 'XGS-PON', 
-'module_info': 'Intel Corp XGSPON-ONU-STICK V1.0 (bfw)', 
-'voltage': '3.26 V'
-}
-```
+## Why so many sensors?
+The script creates a lot of sensors to provide detailed information about the ONU device which can then be used in a [lovelace card](#example-lovelace-card)
 
 # Example lovelace card
 [There is a card example](./examples/ring-tile.yaml) that uses a sections view with custom cards:
