@@ -91,5 +91,3 @@ The script creates a lot of sensors to provide detailed information about the ON
 ![Lovelace Card Example](./docs/assets/ring-tile_example.png)
 
 You may need to change sensor entity_ids in the card to match your MQTT device entity IDs and the color gradients arent dialed in yet, so you may need to adjust the colors to your liking.
-
-I am adding sensors that will represent min/max values for the temperature, signal, and voltage sensors, so you can use (and configure via .env) those instead of hardcoding.
